@@ -3,9 +3,48 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ShowPublic IP - Instantly detect your IP, geolocation, ISP, and DNS details.</title>
-<meta name="description" content="ShowPublic IP - Instantly check your public IP address, geolocation, ISP, timezone, and domain details." />
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<!-- Basic Meta -->
+<title>ShowPublic IP - Instantly Check Your Public IP, Geolocation & ISP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Check your public IP address instantly. View geolocation, ISP, timezone, DNS details, and domain information for free. Accurate and fast IP lookup tool.">
+<meta name="keywords" content="IP address, public IP, IP lookup, geolocation, ISP, DNS, domain info, network information, IP checker">
+<meta name="author" content="ShowPublic IP">
+<link rel="canonical" href="https://showpublicip.github.io/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="ShowPublic IP - Instantly Check Your Public IP, Geolocation & ISP">
+<meta property="og:description" content="Free tool to instantly check your public IP, geolocation, ISP, timezone, DNS, and domain details.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://showpublicip.github.io/">
+<meta property="og:image" content="https://showpublicip.github.io/Capture.PNG">
+
+
+<!-- Favicon -->
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<!-- Structured Data JSON-LD (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ShowPublic IP",
+  "url": "https://showpublicip.github.io/",
+  "description": "Free tool to instantly check your public IP, geolocation, ISP, timezone, DNS, and domain details.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "ShowPublic IP"
+  }
+}
+</script>
+
 
 <style>
   body {font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#f9fafb;margin:0;color:#111827;}
@@ -62,7 +101,8 @@
 <section id="download" class="download-section">
   <h2>Download ShowPublic IP Desktop (Portable)</h2>
   <p>Get the desktop version for Windows 7, 8, 10, or 11.</p>
-  <a id="downloadBtn" href="dl/ShowPublic IP.exe" class="download-btn">⬇ Download .EXE Version</a>
+  <a id="downloadBtn" href="dl/wnew/ShowPublic%20IP.exe" class="download-btn">For Windows 10/11</a>
+  <a id="downloadBtn" href="dl/w7/ShowPublic%20IP.exe" class="download-btn">For Windows 7/8</a>
 </section>
 
 <footer>
@@ -127,15 +167,15 @@ async function showFullInfo(target){
       ['Latitude', humanize(data.latitude)],
       ['Longitude', humanize(data.longitude)],
       ['Postal', humanize(data.postal)],
-      ['Calling Code', humanize(data.calling_code)],
+      ['Calling Code', data.calling_code ? '+' + humanize(data.calling_code) : '—'],
       ['Capital', humanize(data.capital)],
       ['Borders', humanize(data.borders)],
       ['ASN', humanize(data.connection?.asn)],
       ['Organization', humanize(data.connection?.org)],
       ['ISP', humanize(data.connection?.isp)],
       ['Domain', humanize(data.connection?.domain)],
-      ['Timezone ID', humanize(data.timezone?.id)],
-      ['Timezone Abbr', humanize(data.timezone?.abbr)],
+      ['Timezone', humanize(data.timezone?.id)],
+      ['Timezone Code', humanize(data.timezone?.abbr)],
       ['DST', humanize(data.timezone?.is_dst, 'DST')],
       ['UTC Offset', humanize(data.timezone?.utc)],
       ['Current Time', humanize(data.timezone?.current_time)]

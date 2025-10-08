@@ -4,53 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ShowPublic IP - Find Your Public IP & Domain Information</title>
-  <meta name="description" content="ShowPublic IP - Instantly check your public IP address, geolocation, ISP, and domain details. Download the PC version for Windows 7, 8, 10, or 11." />
+  <meta name="description" content="ShowPublic IP - Instantly check your public IP address, geolocation, ISP, and domain details." />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <meta property="og:title" content="ShowPublic IP – Check Your Public IP Instantly">
-  <meta property="og:description" content="Instantly find your public IP, ISP, and location details with ShowPublic IP. Download the Windows version now!">
-  <meta property="og:image" content="https://showpublicip.github.io/capture.PNG">
-  <meta property="og:url" content="https://showpublicip.github.io/">
-  <meta name="twitter:card" content="summary_large_image">
 
   <style>
     body {font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#f9fafb;margin:0;color:#111827;}
-    header {display:flex;justify-content:space-between;align-items:center;background:#2563eb;color:white;padding:16px 40px;box-shadow:0 2px 10px rgba(0,0,0,0.15);}
+    header {display:flex;justify-content:space-between;align-items:center;background:#2563eb;color:white;padding:16px 40px;}
     header h1 {display:flex;align-items:center;font-size:22px;margin:0;}
     header h1 img {width:32px;height:32px;margin-right:10px;}
-    nav a {color:white;margin-left:24px;text-decoration:none;font-weight:500;transition:opacity .2s;}
+    nav a {color:white;margin-left:24px;text-decoration:none;font-weight:500;}
     nav a:hover {opacity:.8;}
-    .container {max-width:900px;margin:40px auto;background:white;border-radius:16px;box-shadow:0 6px 25px rgba(0,0,0,0.08);padding:32px;}
+    .container {max-width:900px;margin:40px auto;background:white;border-radius:16px;padding:32px;}
     .tagline {font-size:16px;color:#4b5563;margin-top:4px;margin-bottom:24px;}
     .search-box {display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-    .search-box input {flex:1;padding:10px 14px;border-radius:10px;border:1px solid #ccc;font-size:15px;transition:border-color .2s;}
-    .search-box input:focus {outline:none;border-color:#2563eb;}
-    .search-box button {padding:10px 16px;border-radius:10px;border:none;background:#2563eb;color:white;cursor:pointer;font-weight:600;transition:background .2s;}
-    .search-box button:hover {background:#1d4ed8;}
+    .search-box input {flex:1;padding:10px 14px;border-radius:10px;border:1px solid #ccc;font-size:15px;}
+    .search-box button {padding:10px 16px;border-radius:10px;border:none;background:#2563eb;color:white;cursor:pointer;font-weight:600;}
     .flag-fav {display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px;}
     .flag-fav img {width:48px;height:48px;border-radius:8px;border:1px solid #e5e7eb;object-fit:contain;}
     .info-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:20px;}
-    .info-card {background:#f9fafb;border-radius:12px;padding:16px;box-shadow:inset 0 0 0 1px #e5e7eb;transition:background .2s;}
-    .info-card:hover {background:#f3f4f6;}
-    .info-card h2 {font-size:14px;color:#6b7280;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+    .info-card {background:#f9fafb;border-radius:12px;padding:16px;box-shadow:inset 0 0 0 1px #e5e7eb;}
+    .info-card h2 {font-size:14px;color:#6b7280;margin-bottom:4px;text-transform:uppercase;}
     .info-card p {font-size:15px;color:#111827;margin:0;word-wrap:break-word;}
     .map-link {display:inline-block;margin-top:18px;text-decoration:none;color:#2563eb;font-weight:500;}
-    .map-link:hover {text-decoration:underline;}
-    footer {text-align:center;padding:20px;margin-top:40px;background:#f3f4f6;color:#6b7280;font-size:14px;}
-    .download-btn {background:#10b981;color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:600;transition:background .2s;}
-    .download-btn:hover {background:#059669;}
   </style>
 </head>
 <body>
   <header>
     <h1><img src="SPLOGORAW.png" alt="logo" /> ShowPublic IP</h1>
-    <nav>
-      <a href="#download">Download ShowPublic IP Desktop (Portable)</a>
-    </nav>
+    <nav><a href="#download">Download ShowPublic IP Desktop</a></nav>
   </header>
 
   <div class="container">
     <h2>Find Your Public IP Address & Domain Information</h2>
-    <p class="tagline">Instantly detect your IP, geolocation, ISP, and DNS details — all in one clean interface.</p>
+    <p class="tagline">Instantly detect your IP, geolocation, ISP, and DNS details.</p>
 
     <div class="flag-fav">
       <img id="flag" alt="flag" />
@@ -66,16 +52,6 @@
     <a id="mapsLink" class="map-link" target="_blank">Open in Google Maps</a>
   </div>
 
-  <section id="download" style="text-align:center; margin-top:50px;">
-    <h2>Download ShowPublic IP Desktop (Portable)</h2>
-    <p style="color:#4b5563; margin-bottom:20px;">Get the desktop version.</p>
-    <a id="downloadBtn" href="#" class="download-btn">⬇ Download .EXE Version</a>
-  </section>
-
-  <footer>
-    © 2025 ShowPublic IP — Built for professionals who care about network visibility.
-  </footer>
-
   <script>
     const txt = document.getElementById('txtSearch');
     const btn = document.getElementById('btnLookup');
@@ -83,52 +59,66 @@
     const flag = document.getElementById('flag');
     const favicon = document.getElementById('favicon');
     const mapsLink = document.getElementById('mapsLink');
-    const downloadBtn = document.getElementById('downloadBtn');
+
     let latt = '', lont = '';
 
-    function cleanDomainInput(input){
+    function cleanDomain(input){
       if(!input) return '';
-      input = input.trim();
-      input = input.replace(/^https?:\/\//i, '').replace(/^www\./i, '');
+      input = input.trim().replace(/^https?:\/\//i,'').replace(/^www\./i,'');
       if(input.includes('/')) input = input.split('/')[0];
       if(input.includes('?')) input = input.split('?')[0];
       if(input.includes('#')) input = input.split('#')[0];
       return input;
     }
 
-    // === JSONP-based ip-api request ===
-    function showIPInfo(target) {
-      infoGrid.innerHTML = `<div class='info-card'><p>Loading data...</p></div>`;
-      const url = `https://ip-api.com/json/${target}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query`;
-      const script = document.createElement('script');
-      const callbackName = 'jsonpCallback_' + Math.floor(Math.random() * 100000);
+    // Resolve domain to IP using Google DNS
+    async function resolveDomain(domain){
+      try{
+        const res = await fetch(`https://dns.google/resolve?name=${domain}&type=A`);
+        const data = await res.json();
+        if(data.Answer && data.Answer.length > 0){
+          return data.Answer[0].data; // return first IP
+        }
+      }catch{}
+      return domain; // fallback
+    }
 
-      window[callbackName] = function (data) {
-        if (data.status !== "success") {
-          infoGrid.innerHTML = `<div class='info-card'><p>Unable to retrieve information: ${data.message || "Unknown error"}</p></div>`;
-          delete window[callbackName];
-          script.remove();
+    async function showIPInfo(target){
+      infoGrid.innerHTML = `<div class='info-card'><p>Loading data...</p></div>`;
+      try{
+        let ipOrDomain = cleanDomain(target);
+
+        if(!/^\d+\.\d+\.\d+\.\d+$/.test(ipOrDomain)){
+          ipOrDomain = await resolveDomain(ipOrDomain);
+        }
+
+        const res = await fetch(`https://ipwho.is/${ipOrDomain}`);
+        const data = await res.json();
+
+        if(!data.success){
+          infoGrid.innerHTML = `<div class='info-card'><p>Failed to retrieve data: ${data.message || 'Unknown error'}</p></div>`;
           return;
         }
 
-        latt = data.lat;
-        lont = data.lon;
+        latt = data.latitude;
+        lont = data.longitude;
 
         const fields = [
-          ['Public IP', data.query],
-          ['Country', `${data.country} (${data.countryCode})`],
-          ['Region', `${data.regionName} (${data.region})`],
+          ['Public IP', data.ip],
+          ['Domain', target || '-'],
+          ['Country', `${data.country} (${data.country_code})`],
+          ['Region', data.region],
           ['City', data.city],
-          ['Postal', data.zip],
-          ['Latitude', data.lat],
-          ['Longitude', data.lon],
-          ['Timezone', data.timezone],
-          ['ISP', data.isp],
-          ['Organization', data.org],
-          ['ASN', data.as]
+          ['Postal', data.postal || '-'],
+          ['Latitude', data.latitude],
+          ['Longitude', data.longitude],
+          ['Timezone', data.timezone_gmt],
+          ['ISP', data.connection.isp],
+          ['Organization', data.connection.org],
+          ['ASN', data.connection.asn]
         ];
 
-        infoGrid.innerHTML = fields.map(([k, v]) => `
+        infoGrid.innerHTML = fields.map(([k,v])=>`
           <div class='info-card'>
             <h2>${k}</h2>
             <p>${v || '-'}</p>
@@ -136,56 +126,20 @@
         `).join('');
 
         mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${latt},${lont}`;
-        const code = data.countryCode.toLowerCase();
+        const code = data.country_code?.toLowerCase() || '';
         flag.src = code ? `https://flagcdn.com/w80/${code}.png` : '';
+        const domainClean = cleanDomain(target);
+        if(domainClean) favicon.src = `https://www.google.com/s2/favicons?sz=64&domain=${domainClean}`;
 
-        const domain = cleanDomainInput(target);
-        if (domain) favicon.src = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
-
-        delete window[callbackName];
-        script.remove();
-      };
-
-      script.src = url + '&callback=' + callbackName;
-      document.body.appendChild(script);
-    }
-
-    // === Detect OS and set download link ===
-    function detectWindowsVersion(){
-      const ua = navigator.userAgent;
-      let version = '';
-      if(ua.includes('Windows NT 10.0')) version = '10';
-      else if(ua.includes('Windows NT 11.0')) version = '11';
-      else if(ua.includes('Windows NT 6.3')) version = '8.1';
-      else if(ua.includes('Windows NT 6.2')) version = '8';
-      else if(ua.includes('Windows NT 6.1')) version = '7';
-      else version = 'unknown';
-
-      let link = 'dl/ShowPublic%20IP.exe';
-      if(version === '7') link = 'dl/w7/ShowPublic%20IP.exe';
-      else if(['8','8.1','10','11'].includes(version)) link = 'dl/wnew/ShowPublic%20IP.exe';
-      else link = 'dl/ShowPublic%20IP.exe';
-
-      downloadBtn.href = link;
-      downloadBtn.textContent = `⬇ Download for Windows`;
-    }
-
-    // === Event listeners ===
-    btn.addEventListener('click', ()=>{
-      const target = cleanDomainInput(txt.value);
-      showIPInfo(target || '');
-    });
-
-    txt.addEventListener('keypress', e=>{
-      if(e.key === 'Enter') {
-        const target = cleanDomainInput(txt.value);
-        showIPInfo(target || '');
+      }catch(e){
+        infoGrid.innerHTML = `<div class='info-card'><p>Failed to retrieve data: ${e.message}</p></div>`;
       }
-    });
+    }
 
-    // === Initial run ===
-    detectWindowsVersion();
-    showIPInfo('');
+    btn.addEventListener('click', ()=>{ const t = txt.value; if(!t){alert('Enter IP or domain'); return;} showIPInfo(t); });
+    txt.addEventListener('keypress', e=>{ if(e.key==='Enter'){ const t = txt.value; if(!t){alert('Enter IP or domain'); return;} showIPInfo(t); } });
+
+    showIPInfo(''); // load own IP info on page load
   </script>
 </body>
 </html>

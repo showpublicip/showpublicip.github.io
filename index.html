@@ -185,20 +185,20 @@
     btn.addEventListener('click', ()=>{
       const target = cleanDomainInput(txt.value);
       if(!target) { alert('Enter the IP or domain you want to search for.'); return; }
-      showIPInfo(`http://ip-api.com/json/${target}`);
+      showIPInfo(`https://ip-api.com/json/${target}`);
     });
 
     txt.addEventListener('keypress', e=>{
       if(e.key === 'Enter') {
         const target = cleanDomainInput(txt.value);
         if(!target) { alert('Enter the IP or domain you want to search for.'); return; }
-        showIPInfo(`http://ip-api.com/json/${target}`);
+        showIPInfo(`https://ip-api.com/json/${target}`);
       }
     });
 
     // Run on load
     detectWindowsVersion();
-    showIPInfo('http://ip-api.com/json/');
+    showIPInfo('https://ip-api.com/json/');
   </script>
 </body>
 </html>

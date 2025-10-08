@@ -6,6 +6,12 @@
   <title>ShowPublic IP - Find Your Public IP & Domain Information</title>
   <meta name="description" content="ShowPublic IP - Instantly check your public IP address, geolocation, ISP, and domain details. Download the PC version for Windows 7, 8, 10, or 11." />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta property="og:title" content="ShowPublic IP – Check Your Public IP Instantly">
+  <meta property="og:description" content="Instantly find your public IP, ISP, and location details with ShowPublic IP. Download the Windows version now!">
+  <meta property="og:image" content="https://showpublicip.github.io/capture.PNG">
+  <meta property="og:url" content="https://showpublicip.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+
   <style>
     body {font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#f9fafb;margin:0;color:#111827;}
     header {display:flex;justify-content:space-between;align-items:center;background:#2563eb;color:white;padding:16px 40px;box-shadow:0 2px 10px rgba(0,0,0,0.15);}
@@ -78,7 +84,6 @@
     const favicon = document.getElementById('favicon');
     const mapsLink = document.getElementById('mapsLink');
     const downloadBtn = document.getElementById('downloadBtn');
-
     let latt = '', lont = '';
 
     function cleanDomainInput(input){
@@ -91,78 +96,61 @@
       return input;
     }
 
-    function getValue(jsonStr, key){
-      try {
-        const pattern = new RegExp('"'+key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'"\\s*:\\s*("([^\\"]*)"|(-?\\d+(\\.\\d+)?))','i');
-        const m = jsonStr.match(pattern);
-        if(m) return decodeUnicode(m[2] || m[3] || '');
-      } catch {}
-      return '';
+    // === JSONP-based ip-api request ===
+    function showIPInfo(target) {
+      infoGrid.innerHTML = `<div class='info-card'><p>Loading data...</p></div>`;
+      const url = `https://ip-api.com/json/${target}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query`;
+      const script = document.createElement('script');
+      const callbackName = 'jsonpCallback_' + Math.floor(Math.random() * 100000);
+
+      window[callbackName] = function (data) {
+        if (data.status !== "success") {
+          infoGrid.innerHTML = `<div class='info-card'><p>Unable to retrieve information: ${data.message || "Unknown error"}</p></div>`;
+          delete window[callbackName];
+          script.remove();
+          return;
+        }
+
+        latt = data.lat;
+        lont = data.lon;
+
+        const fields = [
+          ['Public IP', data.query],
+          ['Country', `${data.country} (${data.countryCode})`],
+          ['Region', `${data.regionName} (${data.region})`],
+          ['City', data.city],
+          ['Postal', data.zip],
+          ['Latitude', data.lat],
+          ['Longitude', data.lon],
+          ['Timezone', data.timezone],
+          ['ISP', data.isp],
+          ['Organization', data.org],
+          ['ASN', data.as]
+        ];
+
+        infoGrid.innerHTML = fields.map(([k, v]) => `
+          <div class='info-card'>
+            <h2>${k}</h2>
+            <p>${v || '-'}</p>
+          </div>
+        `).join('');
+
+        mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${latt},${lont}`;
+        const code = data.countryCode.toLowerCase();
+        flag.src = code ? `https://flagcdn.com/w80/${code}.png` : '';
+
+        const domain = cleanDomainInput(target);
+        if (domain) favicon.src = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+
+        delete window[callbackName];
+        script.remove();
+      };
+
+      script.src = url + '&callback=' + callbackName;
+      document.body.appendChild(script);
     }
 
-    function decodeUnicode(input){
-      return input.replace(/\\u([0-9A-Fa-f]{4})/g, (_, g)=>String.fromCharCode(parseInt(g,16)));
-    }
-
-    async function showIPInfo(url){
-      try {
-        const res = await fetch(url);
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        const json = await res.text();
-        renderInfo(json);
-        showFlag(json);
-        const target = cleanDomainInput(txt.value);
-        if(target) showFavicon(target);
-      } catch(e) {
-        infoGrid.innerHTML = `<div class='info-card'><p>Failed to retrieve data: ${e.message}</p></div>`;
-      }
-    }
-
-    function renderInfo(json){
-      const status = getValue(json, 'status');
-      if(status.toLowerCase() !== 'success'){
-        infoGrid.innerHTML = `<div class='info-card'><p>Unable to retrieve information from the service.</p></div>`;
-        return;
-      }
-
-      latt = getValue(json,'lat');
-      lont = getValue(json,'lon');
-
-      const fields = [
-        ['Public IP', getValue(json,'query')],
-        ['Country', `${getValue(json,'country')} (${getValue(json,'countryCode')})`],
-        ['Region', `${getValue(json,'regionName')} (${getValue(json,'region')})`],
-        ['City', getValue(json,'city')],
-        ['Postal', getValue(json,'zip')],
-        ['Latitude', getValue(json,'lat')],
-        ['Longitude', getValue(json,'lon')],
-        ['Timezone', getValue(json,'timezone')],
-        ['ISP', getValue(json,'isp')],
-        ['Organization', getValue(json,'org')],
-        ['ASN', getValue(json,'as')]
-      ];
-
-      infoGrid.innerHTML = fields.map(([k,v]) => `
-        <div class='info-card'>
-          <h2>${k}</h2>
-          <p>${v || '-'}</p>
-        </div>
-      `).join('');
-
-      mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${latt},${lont}`;
-    }
-
-    function showFlag(json){
-      const code = getValue(json,'countryCode').toLowerCase();
-      flag.src = code ? `https://flagcdn.com/w80/${code}.png` : '';
-    }
-
-    function showFavicon(target){
-      const domain = cleanDomainInput(target);
-      favicon.src = domain ? `https://www.google.com/s2/favicons?sz=64&domain=${domain}` : '';
-    }
-
-    // Detect Windows version and set proper download link
+    // === Detect OS and set download link ===
     function detectWindowsVersion(){
       const ua = navigator.userAgent;
       let version = '';
@@ -182,23 +170,22 @@
       downloadBtn.textContent = `⬇ Download for Windows`;
     }
 
+    // === Event listeners ===
     btn.addEventListener('click', ()=>{
       const target = cleanDomainInput(txt.value);
-      if(!target) { alert('Enter the IP or domain you want to search for.'); return; }
-      showIPInfo(`https://ip-api.com/json/${target}`);
+      showIPInfo(target || '');
     });
 
     txt.addEventListener('keypress', e=>{
       if(e.key === 'Enter') {
         const target = cleanDomainInput(txt.value);
-        if(!target) { alert('Enter the IP or domain you want to search for.'); return; }
-        showIPInfo(`https://ip-api.com/json/${target}`);
+        showIPInfo(target || '');
       }
     });
 
-    // Run on load
+    // === Initial run ===
     detectWindowsVersion();
-    showIPInfo('https://ip-api.com/json/');
+    showIPInfo('');
   </script>
 </body>
 </html>
